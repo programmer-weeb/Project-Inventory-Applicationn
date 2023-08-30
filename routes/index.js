@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+const indexController = require('../controllers/indexController')
+const categoryController = require('../controllers/categoryController')
+const itemController = require('../controllers/itemController')
 
-router.get('/',)
+router.get('/', indexController)
 
-router.get('/item/create', )
-router.get('/item/:id/update', )
-router.get('/item/:id/delete',)
-router.get('/item/:id',)
+router.get('/item/create', itemController.getCreateItem)
+router.get('/item/:id/update', itemController.getUpdateItem)
+router.get('/item/:id/delete', itemController.getDeleteItem)
+router.get('/item/:id', itemController.getItem)
 
 router.post('/item/create', )
 router.post('/item/:id/update', )
