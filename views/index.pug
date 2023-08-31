@@ -1,5 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+    h1=title
+    h2 categories
+    ul
+        each cat in categorys
+            a(href=cat.url) #{cat.name}
+            br
+    hr
+
+    h2 Items
+    ul
+        each item in items
+            li
+                a(href=item.url) #{item.name}
