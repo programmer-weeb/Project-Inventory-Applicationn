@@ -1,12 +1,23 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
 
-var app = express();
+const indexRouter = require('./routes/index');
+const mongoose = require("mongoose");
+
+const app = express();
+
+mongoose.set('strictQuery', false)
+const mongoDbUrl = 'mongodb+srv://admin:admin@cluster0.hlmkbrb.mongodb.net/?retryWrites=true&w=majority'
+
+main()
+async function main() {
+  await mongoose.connect(mongoDbUrl)
+  console.log(('connected to db'))
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -4,10 +4,11 @@ const Category = require('../models/category')
 const {body, validationResult} = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
-module.exports = asyncHandler(async (res, req, next) => {
+
+module.exports = asyncHandler(async (req, res, next) => {
     const [items, categories] = await Promise.all([
         Item.find().exec(),
-        Category.find().exec()
+        Category.find().exec(),
     ])
 
     console.log(items)
@@ -18,4 +19,5 @@ module.exports = asyncHandler(async (res, req, next) => {
         categories,
         items,
     })
+
 })
