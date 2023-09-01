@@ -1,0 +1,16 @@
+extends layout
+
+block content
+
+    h1=title
+
+    form(action="", method="post")
+        Label Name
+            br
+            input(type="text", name="name" required minlength="1" maxlength="50" autocomplete="off")
+        br
+        Label Description
+            br
+            input(type="text", name="description" maxlength="200")
+        br
+        input(type="submit", value="Create")

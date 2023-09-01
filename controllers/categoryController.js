@@ -10,9 +10,11 @@ exports.getCategory = function (req, res, next) {
 };
 
 // /category/create
-exports.getCreateCategory = function (req, res, next) {
-    res.send(`GET Create Category`);
-};
+exports.getCreateCategory = asyncHandler(async (req, res, next) => {
+    res.render('getCreateCategory', {
+        title: 'getCreateCategory'
+    })
+})
 
 // /category/:id/update
 exports.getUpdateCategory = function (req, res, next) {

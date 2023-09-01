@@ -10,9 +10,15 @@ exports.getItem = function (req, res, next) {
 }
 
 // /item/create
-exports.getCreateItem = function (req, res, next) {
-    res.send(`GET Create Item`);
-}
+exports.getCreateItem = asyncHandler(async (req, res, next) => {
+
+    const categories = await Item.find().exec()
+
+    res.render('getCreateItem', {
+        title: 'getCreateitem',
+        categories
+    })
+})
 
 // /item/:id/update
 exports.getUpdateItem = function (req, res, next) {
