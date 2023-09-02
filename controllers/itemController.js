@@ -1,13 +1,23 @@
 const Item = require('../models/item')
 const Category = require('../models/category')
 
-const { body, validationResult } = require("express-validator");
+const {body, validationResult} = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
 // /item/:id
-exports.getItem = function (req, res, next) {
-    res.send(`Item: ${req.params.id}`);
-}
+exports.getItem = asyncHandler(async (req, res, next) => {
+    const item = await Item.findOne({_id: req.params.id}).populate('category').exec()
+    // console.log(item)
+    // res.send(item)
+    res.render('getItem', {
+        title: 'Item',
+        itemName: item.name,
+        itemPrice: item.price,
+        itemDescription: item.description,
+        itemCategory: item.category.name,
+
+    })
+})
 
 // /item/create
 exports.getCreateItem = asyncHandler(async (req, res, next) => {
