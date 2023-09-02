@@ -15,7 +15,7 @@ exports.getItem = asyncHandler(async (req, res, next) => {
         itemPrice: item.price,
         itemDescription: item.description,
         itemCategory: item.category.name,
-
+        itemId: item._id,
     })
 })
 
@@ -49,24 +49,32 @@ exports.postCreateItem = [
         .trim()
         .isLength({min: 3})
         .escape(),
+    body('category', 'Invalid category')
+        .trim()
+        .escape(),
     body('price', 'Invalid price')
         .isLength({min: 1})
         .escape(),
     asyncHandler(async (req, res, next) => {
         // Extract the validation errors from a request.
+        const category = await Category.findOne({name: req.body.category}).exec()
         const errors = validationResult(req)
-        const newItem = new Item({
+        const newItem = await new Item({
             name: req.body.name,
             description: req.body.description,
-            category: req.body.category,
+            // category: req.body.category,
+            category: category,
             price: req.body.price,
         })
-        if (!errors.isEmpty()) {
-            res.send(errors.array())
-        } else {
-            await newItem.save()
-            res.redirect(newItem.url)
-        }
+        res.send(category)
+
+        // if (!errors.isEmpty()) {
+        //     res.send(errors.array())
+        // } else {
+        //     await newItem.save()
+        //     // res.redirect(newItem.url)
+        //     res.send(newItem)
+        // }
     })
 ]
 
@@ -76,6 +84,8 @@ exports.postUpdateItem = function (req, res, next) {
 }
 
 // /item/:id/delete
-exports.postDeleteItem = function (req, res, next) {
-    res.send(`POST Delete Item`)
-}
+exports.postDeleteItem = asyncHandler(async (req, res, next) => {
+    const itemIdToDel = await req.params.id.toString()
+    const deleteItem = await Item.findByIdAndDelete(itemIdToDel)
+    res.redirect('/')
+})

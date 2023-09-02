@@ -10,3 +10,8 @@ block content
     p= itemDescription
     p Category
     p=itemCategory
+
+    // Create a form for the delete button
+    form(action=`/item/${itemId}/delete`, method='POST')
+            input(type='hidden', name='_method', value='DELETE', id=itemId)
+            button(type='submit') Delete
