@@ -22,8 +22,8 @@ async function main() {
     console.log('About to connect')
     await mongoose.connect(mongoDB)
     console.log('Should be connected')
-    // await createCategory('cat1', 'des for cat1');
-    await createItem('item222', 'dddd', 'cat1', 1111);
+    // await createCategory('cat3', 'des for cat1');
+    await createItem('item3', 'des for item 3', 'cat2', 2323)
     console.log('Done')
 
 }
@@ -35,7 +35,7 @@ async function createItem(name, description, category, price) {
         category: (await Category.find({name: category}))[0],
         price,
     }
-    const item = await new Item(newItem)
+    const item = new Item(newItem)
     await item.save()
 }
 

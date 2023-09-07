@@ -11,7 +11,8 @@ const mongoose = require("mongoose");
 const app = express();
 
 mongoose.set('strictQuery', false)
-const mongoDbUrl = 'mongodb+srv://admin:admin@cluster0.hlmkbrb.mongodb.net/?retryWrites=true&w=majority'
+// const mongoDbUrl = 'mongodb+srv://admin:admin@cluster0.hlmkbrb.mongodb.net/?retryWrites=true&w=majority'
+const mongoDbUrl = 'mongodb://127.0.0.1:27017/projectInventory'
 
 main()
 async function main() {
