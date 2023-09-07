@@ -22,7 +22,7 @@ exports.getItem = asyncHandler(async (req, res, next) => {
 // /item/create
 exports.getCreateItem = asyncHandler(async (req, res, next) => {
 
-    const categories = await Item.find().exec()
+    const categories = await Category.find().exec()
 
     res.render('getCreateItem', {
         title: 'getCreateitem',
