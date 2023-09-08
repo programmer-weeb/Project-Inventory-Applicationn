@@ -1,12 +1,12 @@
 const Item = require('../models/item')
 const Category = require('../models/category')
 
-const {body, validationResult} = require("express-validator");
+const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
 // /item/:id
 exports.getItem = asyncHandler(async (req, res, next) => {
-    const item = await Item.findOne({_id: req.params.id}).populate('category').exec()
+    const item = await Item.findOne({ _id: req.params.id }).populate('category').exec()
     // console.log(item)
     // res.send(item)
     res.render('getItem', {
@@ -43,38 +43,37 @@ exports.getDeleteItem = function (req, res, next) {
 exports.postCreateItem = [
     body('name', 'invalidName')
         .trim()
-        .isLength({min: 3})
+        .isLength({ min: 3 })
         .escape(),
     body('description', 'Invalid description')
         .trim()
-        .isLength({min: 3})
+        .isLength({ min: 3 })
         .escape(),
     body('category', 'Invalid category')
         .trim()
         .escape(),
     body('price', 'Invalid price')
-        .isLength({min: 1})
+        .isLength({ min: 1 })
         .escape(),
     asyncHandler(async (req, res, next) => {
         // Extract the validation errors from a request.
-        const category = await Category.findOne({name: req.body.category}).exec()
         const errors = validationResult(req)
-        const newItem = await new Item({
-            name: req.body.name,
-            description: req.body.description,
-            // category: req.body.category,
-            category: category,
-            price: req.body.price,
-        })
-        res.send(category)
 
-        // if (!errors.isEmpty()) {
-        //     res.send(errors.array())
-        // } else {
-        //     await newItem.save()
-        //     // res.redirect(newItem.url)
-        //     res.send(newItem)
-        // }
+        if (!errors.isEmpty()) {
+            res.send(errors.array())
+        } else {
+            const categoryId = req.body.category
+            const category = await Category.findById(categoryId).exec()
+
+            const newItem = new Item({
+                name: req.body.name,
+                description: req.body.description,
+                category: category,
+                price: req.body.price,
+            })
+            await newItem.save()
+            res.redirect(newItem.url)
+        }
     })
 ]
 
