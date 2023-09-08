@@ -84,7 +84,7 @@ exports.postUpdateItem = function (req, res, next) {
 
 // /item/:id/delete
 exports.postDeleteItem = asyncHandler(async (req, res, next) => {
-    const itemIdToDel = await req.params.id.toString()
-    const deleteItem = await Item.findByIdAndDelete(itemIdToDel)
+    const itemIdToDel = req.params.id
+    await Item.findByIdAndDelete(itemIdToDel)
     res.redirect('/')
 })
